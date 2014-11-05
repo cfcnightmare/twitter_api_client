@@ -6,6 +6,7 @@ public class Syfmain {
 	
 		System.out.println(" :^)");
 		System.out.println(" :)");
+		System.out.println(" :");
 	}
 
 }
