@@ -1,19 +1,18 @@
 package twitter;
+
+
 import java.util.List;
 
 import twitter4j.*;
-import twitter4j.api.TimelinesResources;
-import twitter4j.conf.Configuration;
 import twitter4j.conf.ConfigurationBuilder;
-import twitter4j.examples.friendsandfollowers.GetFriendsIDs;
-import twitter4j.examples.list.GetUserListMembers;
 
-public class TwitterIO {
+
+public class TwitterIO implements Twitterclient {
 
 	
 
 	public static void main(String[] args) throws TwitterException   {
-		// TODO Auto-generated method stub
+		
 		
 		
 		ConfigurationBuilder cb= new ConfigurationBuilder();
@@ -35,7 +34,7 @@ public class TwitterIO {
 			
 			//Status stat = tw.updateStatus("Hello");
 		
-	    //System.out.println("Posted!!!");
+	   // System.out.println("Posted!!!");
 	
 
 	
@@ -61,6 +60,24 @@ public class TwitterIO {
 	            
 	        
 		 //}
+	}
+
+	@Override
+	public void postStatus() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Object getStatus() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void getUserTimeline() {
+		// TODO Auto-generated method stub
+		
 	}
 }
 
