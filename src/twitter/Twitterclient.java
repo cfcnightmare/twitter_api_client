@@ -1,16 +1,14 @@
 package twitter;
+import java.util.List;
 
-public interface Twitterclient {
+ public interface Twitterclient {
 
-	final static String postStatus = "tw.updateStatus";
-    public void postStatus();
-
-final static String getStatus  = "statuses";
-public Object getStatus();
-
-final static String getUserTimeline = "tw.getHomeTimeline";
-public void getUserTimeline();
+	 
+	 
+	 final static String postStatus = "tw.updateStatus";
+	 final static String getStatus  = "statuses";
+	 final static String getUserTimeline = "tw.getHomeTimeline";
+	
 
 
-    }
-
+	    }
