@@ -1,126 +1,257 @@
+
 package twitter;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import twitter4j.*;
 import twitter4j.conf.ConfigurationBuilder;
 
 
 
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+
 public class TwitterIO {
 	
-	 static  long userId;
-	static long postId;
-	static String userName;
-	static String post;
+	 
+    static int stop = 0;
+    static int connect = 0;
+    static final String JDBC_DRIVER = "org.postgresql.jdbc.Driver";
+    static final String DB_URL = "jdbc:postgresql://localhost:5433/postgres";
 
-	public static void main(String[] args) throws Exception {
-		
+    // Database credentials
+    static final String USER = "postgres";
+    static final String PASS = "12345";
+    
+//Types
+   
+   
+   java.sql.PreparedStatement st;
+   
+   
+    public static void main(String[] args)  throws Exception{
+        ConfigurationBuilder cb = new ConfigurationBuilder();
+        cb.setDebugEnabled(true);
+        cb.setOAuthConsumerKey("GrO1fdysw80wN0t7AjsP4yMtg");
+        cb.setOAuthConsumerSecret("vkXFw1iwKmR7QkErBHielcvno9uwy82nS20G2EZP3iL6f3ybAR");
+        cb.setOAuthAccessToken("2859592708-wYYGmguzOaImRPjxirc1TZj3EkNdWWHOJDCNskq");
+        cb.setOAuthAccessTokenSecret("0r61bdwmrYEXlYheU2lNEGyvEMhJQTd7deAFCzYcuRaNk");
 
-		ConfigurationBuilder cb = new ConfigurationBuilder();
+        TwitterStream ts = new TwitterStreamFactory(cb.build()).getInstance();
+                
+        
+        StatusListener listener = new StatusListener() {
 
-		cb.setDebugEnabled(true)
-				.setOAuthConsumerKey("lUovo3BZqnUZtHZ93bMswt3Eo")
-				.setOAuthConsumerSecret("fjOLhctYpofr67r3leuRYc80fs7wv0HWbGVaPPgXDMpoaQ18bq")
-				.setOAuthAccessToken("2859592708-wYYGmguzOaImRPjxirc1TZj3EkNdWWHOJDCNskq")
-				.setOAuthAccessTokenSecret("0r61bdwmrYEXlYheU2lNEGyvEMhJQTd7deAFCzYcuRaNk");
+            @Override
+            public void onException(Exception arg0) {
+                // TODO Auto-generated method stub
 
-		TwitterFactory tf = new TwitterFactory(cb.build());
-		twitter4j.Twitter tw = tf.getInstance();
-		
+            }
 
-		// POSTING MESSAGE************
+            @Override
+            public void onDeletionNotice(StatusDeletionNotice arg0) {
+                // TODO Auto-generated method stub
 
-		//Status stat = tw.updateStatus(""); // Текст поста
-		//System.out.println("Posted!!!"); // подтверждение о проведении операции
+            }
 
-		// Reading****(USERNAME,POST TEXT,STAT ID,USER ID************
+            @Override
+            public void onScrubGeo(long arg0, long arg1) {
+                // TODO Auto-generated method stub
 
-		List<Status> statuses = tw.getHomeTimeline();
-		
+            }
 
-		for (Status status : statuses) {
-			
-				 userId = status.getUser().getId();
-				 postId = status.getId();
-				 post = status.getText();
-				 userName = status.getUser().getName();
-				
-				 System.out.println(userName + ":"+ post);
-					System.out.println("STATUS ID:" + "  " + postId);
-					System.out.println("USER ID:" + userId);
-					
-					/*погнали в базу*********************************************************************************************************/
-					
-					Connection con = null;
-			        Statement st = null;
+            @Override
+            public void onStatus(Status status) {
+                
+                Connection conn = null;
+                Statement stmt = null;
+                
+                
+                
+                try {
+                    
+                        if (connect != 1) {
+                        	
 
-			        String url = "jdbc:postgresql://localhost:5433/postgres";
-			        String user = "postgres";
-			        String password = "12345";
+                            // STEP 3: Open a connection
+                            System.out.println("Connecting to    database...");
+                            conn = DriverManager.getConnection(DB_URL, USER,
+                                    PASS);
+                            // no need to display the fields... directly insert
+                            // them and work on it
+                            
+                            
+                            
+                            long userId=status.getUser().getId();
+                		    long postId= status.getId();
+                			String post = status.getText();
+                			String userName = status.getUser().getName();
+                			
+                			
+                			
+                			java.sql.PreparedStatement st;
+                			stmt = conn.createStatement();
+                     	    ResultSet res1= stmt.executeQuery("SELECT * from twitter where userid = " + userId + "");
+                             
+                              if(!res1.next())
+                              {
+                     	      st =  conn.prepareStatement("INSERT INTO twitter (userid,username, postid,post) VALUES (?,?,?,?)");
+                     	     st.setLong(1, userId);
+                     	    st.setString(2, userName);
+                     	   st.setLong(3, postId);
+                     	    st.setString(4,post);
+                     	   st.executeUpdate(); 
+                     	  System.out.println(userId + userName + postId + post);
+                          System.out.println("Inserting records into the table...");
+                              } 
+                     	     
+                     	     
+                     	      
+                     	      
+                     	     
+                              
+                     	   
+                			
+                			/*try {
+                		        userId = Long.valueOf(status.getUser().getId());
+                		        postId = Long.valueOf(status.getId());
+                		        
+                		        //do more validations here
+                		    } catch (NumberFormatException e) {
+                		        throw new RuntimeException("Not a valid input.");
+                		    }*/
+                            
+                			
+                			//System.out.println(userId + userName + postId + post);
+                            /*System.out.println("Inserting records into the table...");
+                                    
+                            stmt = conn.createStatement();
+                        
+                            connect = 1;
+                           
+                          while(conn!=null){
+                        	   PreparedStatement ps = conn.prepareStatement
+                                    
+                                    
+                     			     ("insert into  twitter values(?,?,?,?)");
+                        	  ps.setString(1,post);
+      						  ps.setLong(2,userId);
+      						  ps.setString(3,userName);
+      						  ps.setLong(4,postId);
+      						  
+      						  ps.executeUpdate();
+             
+                           	    	
+             						  
+             						  
+             			   System.out.println(ps);
+                          }
+                              	    
+                					
+                              	      
+                              	      String query = "select * from twitter  ";
+                              	        ResultSet rs =  stmt.executeQuery(query);
+                              	      System.out.println("TweetID tweetmsg userid username");
+                             while (rs.next()) {
+                              	         long TweetID = rs.getLong("TwitterID");
+                              	         String tweetmsg = rs.getString("tweetmsg");
+                              	         long userid = rs.getLong("userid");
+                              	         String username = rs.getString("username");
+                              	         
+                              	       
+                              	   
+                              	        System.out.println(TweetID + "  " + tweetmsg+"   "+userid+"   "+username);
+                            while(conn!=null){
+                            	
+                           	 
+                                String sql1 =
+                                "INSERT INTO twitter(tweetmsg,userid,username,twitterid)" + " VALUES ( " + post + "   " + userId + "   " + userName + "   " + postId +")";
+                                System.out.println(sql1);
+	                            stmt.executeUpdate(sql1);
+	                           System.exit(0);
+                            }
+                             }*/
 
-			        try {
+                        
+                        
+                			
+                     	      
+                   
+                    
+                    	
+                   
+                                      
+                              
+                                      
+                              
+                              
+                              
+                               
+                              
+                        
 
-			          con = DriverManager.getConnection(url, user, password);
+                            
+                            
 
-			          st = con.createStatement();
-			          
-			          con.setAutoCommit(false);
-			          
-			          st.addBatch("DROP TABLE IF EXISTS twitter");
-			          st.addBatch("CREATE TABLE twitter(id serial, name text, userid numeric,post text,postid bigint)");
-			          st.addBatch("INSERT INTO twitter(name) VALUES " + TwitterIO.userName);
-			          st.addBatch("INSERT INTO twitter(userid) VALUES " + TwitterIO.userId);
-			          st.addBatch("INSERT INTO twitter(post) VALUES " +TwitterIO.post);
-			          st.addBatch("INSERT INTO twitter(postid) VALUES " + TwitterIO.postId);
-			                           
+                    
+                        System.out
+                                .println("Inserted records into the table...");
+                        stop = 1;
+                        System.exit(0);
+                        stmt.close();
+                        conn.close();
+                        }
+                } catch (SQLException se) {
+                    // Handle errors for JDBC
+                    se.printStackTrace();
+                } catch (Exception e) {
+                    // Handle errors for Class.forName
+                    e.printStackTrace();
+                } finally {
+                    // finally block used to close resources
+                    try {
+                        if (stmt != null)
+                            stmt.close();
+                    } catch (SQLException se2) {
+                    }// nothing we can do
+                    try {
+                        if (conn != null)
+                            conn.close();
+                    } catch (SQLException se) {
+                        se.printStackTrace();
+                    }// end finally try
+                }// end try
 
-			          int counts[] = st.executeBatch();
+            }
 
-			          con.commit();
+            @Override
+            public void onTrackLimitationNotice(int arg0) {
+                // TODO Auto-generated method stub
 
-			          System.out.println("Committed " + counts.length + " updates");
+            }
 
-			        } catch (SQLException ex) {
+            @Override
+            public void onStallWarning(StallWarning arg0) {
+                // TODO Auto-generated method stub
+            
+            }
+            
+        };
 
-			            System.out.println(ex.getNextException());
-			            
-			            if (con != null) {
-			                try {
-			                    con.rollback();
-			                } catch (SQLException ex1) {
-			                    Logger lgr = Logger.getLogger(PostgreSample.class.getName());
-			                    lgr.log(Level.WARNING, ex1.getMessage(), ex1);
-			                }
-			            }
+        // More robust filtering like by location/time zone/etc here itself?
+        FilterQuery fq = new FilterQuery();
 
-			            Logger lgr = Logger.getLogger(PostgreSample.class.getName());
-			            lgr.log(Level.SEVERE, ex.getMessage(), ex);
+        String keywords[] = { "Iphone6" };
 
-			        } finally {
+        fq.track(keywords);
 
-			            try {
-			 
-			                if (st != null) {
-			                    st.close();
-			                }
-			                if (con != null) {
-			                    con.close();
-			                }
-
-			            } catch (SQLException ex) {
-			                Logger lgr = Logger.getLogger(PostgreSample.class.getName());
-			                lgr.log(Level.WARNING, ex.getMessage(), ex);
-			            }
-			        }
-				
-		
-	}
-	}}	
-	
-
+        ts.addListener(listener);
+        ts.filter(fq);
+        
+    }
+}
