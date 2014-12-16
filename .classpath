@@ -2,18 +2,11 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
-	<classpathentry kind="lib" path="D:/eclipse-standard-luna-SR1-win32-x86_64/eclipse/dropins/postgresql-9.3-1102.jdbc41.jar"/>
-	<classpathentry kind="lib" path="D:/eclipse-standard-luna-SR1-win32-x86_64/eclipse/dropins/javax.persistence-3.0-prelude-embedded-m2-sources.jar"/>
-	<classpathentry kind="lib" path="D:/eclipse-standard-luna-SR1-win32-x86_64/eclipse/dropins/twitter4j-4.0.2/lib/twitter4j-async-4.0.2.jar"/>
-	<classpathentry kind="lib" path="D:/eclipse-standard-luna-SR1-win32-x86_64/eclipse/dropins/twitter4j-4.0.2/lib/twitter4j-core-4.0.2.jar"/>
-	<classpathentry kind="lib" path="D:/eclipse-standard-luna-SR1-win32-x86_64/eclipse/dropins/twitter4j-4.0.2/lib/twitter4j-examples-4.0.2.jar"/>
-	<classpathentry kind="lib" path="D:/eclipse-standard-luna-SR1-win32-x86_64/eclipse/dropins/twitter4j-4.0.2/lib/twitter4j-media-support-4.0.2.jar"/>
-	<classpathentry kind="lib" path="D:/eclipse-standard-luna-SR1-win32-x86_64/eclipse/dropins/twitter4j-4.0.2/lib/twitter4j-stream-4.0.2.jar"/>
-	<classpathentry kind="lib" path="D:/eclipse-standard-luna-SR1-win32-x86_64/eclipse/dropins/mysql-connector-java-5.1.34/mysql-connector-java-5.1.34-bin.jar"/>
-	<classpathentry kind="lib" path="D:/eclipse-standard-luna-SR1-win32-x86_64/eclipse/dropins/twitter4j-4.0.3-SNAPSHOT/lib/twitter4j-async-4.0.3-SNAPSHOT.jar"/>
-	<classpathentry kind="lib" path="D:/eclipse-standard-luna-SR1-win32-x86_64/eclipse/dropins/twitter4j-4.0.3-SNAPSHOT/lib/twitter4j-core-4.0.3-SNAPSHOT.jar"/>
-	<classpathentry kind="lib" path="D:/eclipse-standard-luna-SR1-win32-x86_64/eclipse/dropins/twitter4j-4.0.3-SNAPSHOT/lib/twitter4j-examples-4.0.3-SNAPSHOT.jar"/>
-	<classpathentry kind="lib" path="D:/eclipse-standard-luna-SR1-win32-x86_64/eclipse/dropins/twitter4j-4.0.3-SNAPSHOT/lib/twitter4j-media-support-4.0.3-SNAPSHOT.jar"/>
-	<classpathentry kind="lib" path="D:/eclipse-standard-luna-SR1-win32-x86_64/eclipse/dropins/twitter4j-4.0.3-SNAPSHOT/lib/twitter4j-stream-4.0.3-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="D:/eclipse-jee-luna-SR1-win32-x86_64/eclipse/dropins/twitter4j-4.0.2/lib/twitter4j-async-4.0.2.jar"/>
+	<classpathentry kind="lib" path="D:/eclipse-jee-luna-SR1-win32-x86_64/eclipse/dropins/twitter4j-4.0.2/lib/twitter4j-core-4.0.2.jar"/>
+	<classpathentry kind="lib" path="D:/eclipse-jee-luna-SR1-win32-x86_64/eclipse/dropins/twitter4j-4.0.2/lib/twitter4j-examples-4.0.2.jar"/>
+	<classpathentry kind="lib" path="D:/eclipse-jee-luna-SR1-win32-x86_64/eclipse/dropins/twitter4j-4.0.2/lib/twitter4j-media-support-4.0.2.jar"/>
+	<classpathentry kind="lib" path="D:/eclipse-jee-luna-SR1-win32-x86_64/eclipse/dropins/twitter4j-4.0.2/lib/twitter4j-stream-4.0.2.jar"/>
+	<classpathentry kind="lib" path="D:/eclipse-jee-luna-SR1-win32-x86_64/eclipse/dropins/postgresql-9.3-1102.jdbc41.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
